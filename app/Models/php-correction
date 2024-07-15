@@ -1,0 +1,39 @@
+<?php 
+namespace App\Http\Requests;
+
+use Illuminate\Foundation\Http\FormRequests;
+use App\Models\Category;
+
+class StoreCategoryRequest extends FormRequest()
+{
+ public authorize()
+ {
+    return true;
+ }
+
+ public function rules ()
+    {
+        return [
+            'name' => [
+                      'required',
+                      'string',
+                      'max:255',
+                      function ($attribute, $value, $fail){\
+                         $existingCategory = Category::where('name',$value )->where ('deleted',0)->first();
+                         if(existingCategory)
+                         {
+                            $fail('the category name is already exist please try new !')
+                         }
+                    },
+
+                ],
+        ]
+    };
+ 
+}
+
+public function createCategory()
+{
+    $name = $this->name;
+    $existCategory = Category::where('name',)
+}
